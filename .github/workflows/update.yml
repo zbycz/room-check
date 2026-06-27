@@ -32,7 +32,7 @@ jobs:
       - name: Generate availability files
         run: |
           mkdir -p _site
-          python3 prezidentska_calendar.py 90 1 --html
+          python3 prezidentska_calendar.py 14 1
           mv index.html _site/
           mv room.ics _site/
 

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 Prezidentská chata — ceny a dostupnost pokoje Vejminek pro 2 až 3
-Použití: python3 prezidentska_calendar.py [počet_dní] [počet_dospělých] [--html]
+Použití: python3 prezidentska_calendar.py [počet_dní] [počet_dospělých]
 Výchozí: 14 dní, 1 dospělý
-Vždy generuje room.ics; s --html také index.html.
+Vždy generuje room.ics a index.html.
 """
 import urllib.request
 import json
@@ -48,7 +48,7 @@ def format_price(price: float) -> str:
 
 
 def format_price_ics(price: float) -> str:
-    return f"{price:,.0f} Kč/noc".replace(",", " ")
+    return f"{price:.0f}"
 
 
 def is_free(day: dict) -> bool:
@@ -157,8 +157,6 @@ def write_html(
 
 def main() -> None:
     positional = [a for a in sys.argv[1:] if not a.startswith("--")]
-    flags = [a for a in sys.argv[1:] if a.startswith("--")]
-    output_html = "--html" in flags
 
     days = int(positional[0]) if len(positional) > 0 else 14
     adults = int(positional[1]) if len(positional) > 1 else 1
@@ -183,8 +181,7 @@ def main() -> None:
     print("-" * 30)
 
     write_ics(values)
-    if output_html:
-        write_html(values, date_from, date_to, days, adults)
+    write_html(values, date_from, date_to, days, adults)
 
 
 if __name__ == "__main__":
